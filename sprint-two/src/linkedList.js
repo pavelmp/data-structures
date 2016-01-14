@@ -8,46 +8,111 @@
 
 // list = {head: {value: 4, next: "tail"}, tail: {value:5,next: null}}
 
+/*
+Step 0: list = {};
+
+Step 1: add node {value: 4, next: null}
+
+list = {head: {value: 4, next: null}, 
+        tail: {value: 4, next: null}}
+
+Step 2: add 2nd node {value: 5, next: null}
+
+list = {head: {value: 4, next: "tail"}, 
+        tail: {value: 5, next: null}}
+
+Step 3: add 3rd node {value: 6, next: null}
+
+list = {head: {value: 4, next: "tail"}, 
+        tail: {value: 5, next: null}}
+
+var oldTail =  {value: 5, next: null}     
+
+list = {head: {value: 4, next: "tail"}, 
+        tail: {value: 6, next: null}} 
+
+var oldTail =  {value: 5, next: null} change next to "tail"
+var oldTail =  {value: 5, next: "tail"} 
+
+list[nextNode] = oldTail
+
+list = {head: {value: 4, next: "tail"}, 
+        tail: {value: 6, next: null}, 
+        0: {value: 5, next: "tail"}} 
+
+
+list.head.next = nextNode;
+
+list = {head: {value: 4, next: 0}, 
+        tail: {value: 6, next: null}, 
+        0: {value: 5, next: "tail"}} 
+
+
+Remove Head:
+
+oldHeadVal = list.head.value   (which is 4)
+newHead = list [0]   (which is {value: 5, next: "tail"})
+list.head = newHead ( that's {value: 5, next: "tail"})
+
+list = {head: {value: 5, next: "tail"}, 
+        tail: {value: 6, next: null}, 
+        0: {value: 5, next: "tail"}} 
+
+*/
+
+// list = {head: {value: 4, next: "tail"}, tail: {value:5,next: null}}
+
 
 var LinkedList = function() {
   var list = {};
   list.head = null;
   list.tail = null;
   var nextNode = 0;
-
+  var length = 0;
 
   list.addToTail = function(value) {
     var newNode = Node(value); //{value:4, next: null}
-    if(list.head === null){
+    if(length === 0){
       list.head = newNode;//nextNode; // list.head = 0;
       list.tail = newNode;
-    } else {
+      length++;
+    } else if (length === 1) {
         var oldTail = list.tail; // //{value:4, next: null}
         list.tail = newNode;// {value:5, next: null}
         oldTail.next = "tail";
         list.head = oldTail;
+        length++;
+    } else {
+      // normal
+      var oldTail = list.tail;
+      list.tail = newNode;
+      oldTail.next = "tail";
+      list[nextNode] = oldTail;
+      list.head.next = nextNode;
+      nextNode++;
+      length++;
     }
-
-
-    
-
-
-   // list[nextNode] = newNode; //list[0] = {value:4, next: null};
-    
-    
-
-   // nextNode++; // nextNode = 1
   };
 
   list.removeHead = function() {
     if(list.head === null) {
       return "can't whatever empty LL";
+    } else if (length === 1){
+        var oldHeadVal = list.head.value;
+        list.head = null;
+        list.tail = null;
+        length--;
+        return oldHeadVal;
+    } else {
+        var oldHeadVal = list.head.value;
+        var oldHeadNext = list.head.next;
+        var newHead = list[oldHeadNext]; // 1
+       list.head = newHead; //0
+       delete list[oldHeadNext];
+       length--;
+       return oldHeadVal;
     }
-    var oldHead = list[list.head].value;
-    var newHeadIndex = list[list.head].next; // 1
-    delete list[list.head]; //0
-    list.head = newHeadIndex;
-    return oldHead;
+
   };
 
   list.contains = function(target) {
