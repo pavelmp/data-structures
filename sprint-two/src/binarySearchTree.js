@@ -26,19 +26,22 @@ var BinarySearchTree = function(value) {
 		if (this.value === value) {
 			return true;
 		} else if (this.left === null && this.right === null) {
-				return false;
+			return false;
+		} else if(this.left !== null && this.right !== null){
+			return this.left.contains(value) || this.right.contains(value);
 		} else {
-// we were here - finishing contains. check if left / right is null
-// if one isn't, return recursive call on that branch
-				if ()
-				return this.left.contains(value)
-
-			}
-		}
+			return this.left ? this.left.contains(value) : this.right.contains(value); 
+		} 
 	};
 
 	tree.depthFirstLog = function (callback) {
-
+		callback(this.value);
+		if (this.left !== null) {
+			this.left.depthFirstLog(callback);
+		}
+		if (this.right !== null) {
+			this.right.depthFirstLog(callback);
+		}
 	};
 
 	return tree;
