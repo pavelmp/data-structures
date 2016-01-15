@@ -11,7 +11,17 @@ HashTable.prototype.insert = function(k, v) {
   if(!Array.isArray(this._storage.get(index))){
     this._storage.set(index,[[k,v]]);
   } else {
-    this._storage.set(this._storage.get(index).concat([k,v]));
+    var found = false;
+    for(var x=0, arr = this._storage.get(index); x<arr.length;x++){
+      if(arr[x][0] === k){
+        arr[x][1] = v;
+        found = true;
+      }
+    }
+    if(!found){
+      arr.push([k,v]);
+    }
+    this._storage.set(index,arr);
   }
 };
 
@@ -27,13 +37,22 @@ HashTable.prototype.retrieve = function(k) {
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  this._storage.set(index,undefined);
+  var arr = this._storage.get(index);
+  for(var x=0;x<arr.length;x++){
+    if(arr[x][0] === k){
+      arr.splice(x,1);
+    }
+  }
+  this._storage.set(index,arr);
 };
 
 
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ Insert: O(1)
+ Retrieve: O(1)
+ Remove: O(1)
  */
 
 
