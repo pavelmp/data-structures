@@ -39,18 +39,18 @@ Graph.prototype.removeNode = function(node) {
 	for(var key in this){
 		if(this[key].value === node){
 			nodeWithValue = key;
-			
+			delete this[key];
 		}
 	}
 	
 	for(var key in this){
-		// check if it;s an object	
-		var indexOfRemovedEdge = this[key].edges.indexOf(nodeWithValue);
-		if(indexOfRemovedEdge !== -1){
-			this[key].edges.splice(indexOfRemovedEdge,1);
-		}
+		if(typeof this[key] === 'object'){
+			var indexOfRemovedEdge = this[key].edges.indexOf(nodeWithValue);
+			if(indexOfRemovedEdge !== -1){
+				this[key].edges.splice(indexOfRemovedEdge,1);
+			}
+		}	
 	}	
-	delete this[nodeWithValue];
 };
 
 // {0: {value: 2, edges: []}}
