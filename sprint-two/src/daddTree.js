@@ -29,12 +29,19 @@ treeMethods.contains = function(target) {
    	return result;
    }
 };
-
-var daddyTree = function (value) {
+// daddTree constructor that uses Tree constructor
+var daddTree = function (value) {
   var newDaddyTree = Tree(value);
+  _.extend(newDaddyTree,daddyTreeMethods);
+  newDaddyTree.parent = null; 
   return newDaddyTree;
+};
 
-}
+var daddyTreeMethods = {};
+
+daddyTreeMethods.removeFromParent = function() {
+  return null;
+};
 
 
 /*
