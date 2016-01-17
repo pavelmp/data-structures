@@ -27,7 +27,7 @@ HashTable.prototype.insert = function(k, v) {
     if(!found){
       arr.push([k,v]);
     }
-    this._storage.set(index,arr);
+    //this._storage.set(index,arr);
   }
 };
 

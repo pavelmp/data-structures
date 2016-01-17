@@ -42,6 +42,34 @@ var BinarySearchTree = function(value) {
 		}
 	};
 
+/*
+	levels = [5];
+	levels[1] = [5];
+
+*/
+
+
+	tree.breadthFirstLog = function (callback) {
+	  var levels = [];
+
+	  function recursiveLog (node, level) {
+	  	levels[level] = levels[level] || [];
+	  	levels[level].push(node.value);
+	  	if (node.left !== null) {
+			recursiveLog(node.left, level+ 1);
+		  }
+		if (node.right !== null) {
+			recursiveLog(node.right, level + 1);
+		  }
+	  }
+	  recursiveLog(this, 0);
+	  console.log(levels);
+	  levels = _.flatten(levels);
+	  for(var x=0; x<levels.length; x++) {
+	  	callback(levels[x]);	
+	  }
+	};
+
 	return tree;
 };
 
@@ -52,3 +80,17 @@ var BinarySearchTree = function(value) {
  Contains: O(log(n))
  DepthFirstLog: O(n)
  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
